@@ -36,11 +36,12 @@ if (isset($_POST['add_prods_btn'])) {
     $temploc = $_FILES['prod_img']['tmp_name'];
 
 
-
-    $query = mysqli_query($conn, "INSERT INTO `product_table`(`product_name`, `category`, `description`, `price`, `image`) VALUES ('$pname','$pcategory','$pdesc','$price','$imgpath')");
+    $q = "INSERT INTO `product_table`(`product_name`, `category`, `description`, `price`, `image`,`last_updated`) VALUES ('$pname','$pcategory','$pdesc','$price','$imgpath',CURRENT_TIMESTAMP)";
+    $query = mysqli_query($conn, $q);
 
     if ($query) {
         move_uploaded_file($temploc, IMG_PATH . $imgpath);
+        header("location:../HTML/header.php");
         echo "FILES AND DATA UPLOADED";
     } else {
         echo "UNKNOWN ERROR OCCURED";

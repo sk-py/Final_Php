@@ -10,7 +10,8 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="../Styles/header.css">
+    <!-- <link rel="stylesheet" href="../Styles/header.css"> -->
+    <link rel="stylesheet" href="../Styles/pcard.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,8 +36,7 @@ session_start();
         if (isset($_SESSION['auth'])) {
             echo <<<Buttons
                         <span>
-                            <a class="auth_btn" href="login.html">Sign in</a>&nbsp;&nbsp;
-                           
+                            <a class="auth_btn" style="background-color: #fff;color:black" href="login.php">Sign in</a>&nbsp;&nbsp;
                         </span>
                     Buttons;
         } else {
@@ -66,7 +66,7 @@ session_start();
         <ul id="ul_large">
             <li><a href="#">Home</a></li>
             <li><a href="#">Products</a></li>
-            <li><a href="#">Latest Products</a></li>
+            <li><a href="#latest_product">Latest Products</a></li>
             <li><a href="#footer">About us</a></li>
             <li><a href="#">Contact us</a></li>
         </ul>
@@ -75,8 +75,8 @@ session_start();
         if (isset($_SESSION['auth'])) {
             echo <<<Buttons
                         <span>
-                            <a class="auth_btn auth_btn2" href="login.html">Sign in</a>&nbsp;
-                            <!--<a class="auth_btn auth_btn2" href="login.html">Sign up</a>-->
+                            <a class="auth_btn auth_btn2" href="login.php">Sign in</a>&nbsp;
+                            <!--<a class="auth_btn auth_btn2" href="login.php">Sign up</a>-->
                         </span>
                     Buttons;
         } else {
@@ -127,14 +127,80 @@ session_start();
     <!-----------------------------------------------------------------------Carousel End -------------------------------------------------------------------------------------->
 
 
+
+    <section class="sec-1">
+        <div class="box">
+            <div class="white">
+                <p>Grocery</p>
+            </div>
+            <img
+                src="https://images-eu.ssl-images-amazon.com/images/G/31/img22/Wearables/PC_CategoryCard_379X304_1._SY304_CB614835787_.jpg">
+        </div>
+
+        <div class="box">
+            <div class="white">
+                <p>Fashion</p>
+            </div>
+            <img
+                src="https://images-eu.ssl-images-amazon.com/images/G/31/img22/Wearables/PC_CategoryCard_379X304_1._SY304_CB614835787_.jpg">
+        </div>
+
+        <div class="box">
+            <div class="white">
+                <p>Electronics</p>
+            </div>
+            <img
+                src="https://images-eu.ssl-images-amazon.com/images/G/31/img22/Wearables/PC_CategoryCard_379X304_1._SY304_CB614835787_.jpg">
+        </div>
+
+    </section>
+
+    <section class="sec-1">
+        <div class="box">
+            <div class="white">
+                <p>Two Whellers</p>
+            </div>
+            <img
+                src="https://images-eu.ssl-images-amazon.com/images/G/31/img22/Wearables/PC_CategoryCard_379X304_1._SY304_CB614835787_.jpg">
+        </div>
+
+        <div class="box">
+            <div class="white">
+                <p>Home and Furniture</p>
+            </div>
+            <img
+                src="https://images-eu.ssl-images-amazon.com/images/G/31/img22/Wearables/PC_CategoryCard_379X304_1._SY304_CB614835787_.jpg">
+        </div>
+
+        <div class="box">
+            <div class="white">
+                <p>Toys</p>
+            </div>
+            <img
+                src="https://images-eu.ssl-images-amazon.com/images/G/31/img22/Wearables/PC_CategoryCard_379X304_1._SY304_CB614835787_.jpg">
+        </div>
+
+    </section>
+
+    <!---------------------------------------------------------------------------------card end------------------------------------------------------------------------------>
+
+
+
+
+    <!-- ----------------------------------------------------------------------Category Cards------------------------------------------------------------------------ -->
+
+
     <!-- <div style="height: 10vh;width:100svw;background-color: grey;padding: 0;margin-top:-4px;">
     </div>
     <div style="height: 30vh;width:100svw;background-color: #ffff;">
     </div> -->
-    <div class="wrapper-div">
+    <div class="wrapper-div" id="latest_product">
+        <div class="banner-latest">
+            <h2>Latest Added Products</h2>
+        </div>
         <div class="latest_products_section">
             <?Php
-            $query = "SELECT * FROM `product_table` ORDER BY `id` ASC";
+            $query = "SELECT * FROM `product_table` ORDER BY `id` DESC LIMIT 8";
             $result = mysqli_query($conn, $query);
 
             while ($fetch = mysqli_fetch_assoc($result)) {
@@ -144,7 +210,7 @@ session_start();
                 $price = $fetch['price'];
                 $image = $fetch['image'];
 
-                $truncatedDescription = strlen($description) > 100 ? substr($description, 0, 100) . "..." : $description;
+                $truncatedDescription = strlen($description) > 80 ? substr($description, 0, 80) . "..." : $description;
                 ?>
                 <div class="product_card">
                     <span id="prod_img_span">
@@ -154,17 +220,23 @@ session_start();
                         <h4>
                             <?Php echo $product_name ?>
                         </h4>
-                        <h6>
+                        <h5 id="trunc_desc">
                             <?Php echo $truncatedDescription ?>
-                        </h6>
+                        </h5>
                         <p>
                             <?Php echo $price ?> &#8377;
                         </p>
+
                     </div>
-                    <form action="" method="Post">
-                        <button type="submit" value="<?Php echo $pid ?>" name="prod_view_btn" id="prod_view_btn">View
-                            Item</button>
+                    <form action="products_detail.php" method="Post">
+                        <button type="submit" value="<?Php echo $pid ?>" name="prod_view_btn" id="prod_view_btn">Detailed
+                            View
+                        </button>
                     </form>
+                    <sub style="font-size:0.8rem;padding: 0.2rem;">
+                        Last updated -
+                        <?Php echo $fetch['last_updated'] ?>
+                    </sub>
                 </div>
 
                 <?Php
@@ -172,9 +244,30 @@ session_start();
             }
             ?>
         </div>
+        <a href="all_products.php" style="text-decoration: none;font-size: 1.2rem;color:blue;margin-top: 1rem;">Explore
+            all
+            products</a>
+
     </div>
-    <div style="height: 100vh;width:100svw;background-color: #fff;">
+
+
+
+    <!--------------------------------------------------------About us ------------------------------------------------------------->
+
+
+
+    <div class="aboutus">
+
     </div>
+
+
+
+
+
+
+
+
+
 
     <div id="footers">
         <span id="logo_span">
@@ -223,21 +316,20 @@ session_start();
     <nav id="bottom-nav">
         <span id="ul_small">
             <span>
-                <i class="fa-solid fa-house" style="color: #ffffff;"></i><br>
+                <a href="header.php"><i class="fa-solid fa-house" style="color: #ffffff;"></i></a><br>
+            </span>
+            <span>
+                <a href="all_products.php"> <i class="fa-solid fa-store" style="color: #ffffff;"></i></a><br>
+            </span>
+            <span>
+                <a href="add_products.php"> <i id="plus-icon" class="fa-solid fa-circle-plus"></i></a><br>
 
             </span>
             <span>
-                <i class="fa-solid fa-store" style="color: #ffffff;"></i><br>
+                <a href="#"><i class="fa-regular fa-user" style="color: #ffffff;"></i></a><br>
             </span>
             <span>
-                <i id="plus-icon" class="fa-solid fa-circle-plus"></i><br>
-
-            </span>
-            <span>
-                <i class="fa-regular fa-user" style="color: #ffffff;"></i><br>
-            </span>
-            <span>
-                <i class="fa-solid fa-circle-info" style="color: #ffffff;"></i><br>
+                <a href="#"><i class="fa-solid fa-circle-info" style="color: #ffffff;"></i></a><br>
             </span>
 
 
