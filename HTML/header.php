@@ -29,7 +29,7 @@ session_start();
     <!------------------------------------------------Navbar for small/medium Screen------------------------------------->
 
     <nav id="mobile_navbar">
-        <h3><img width="45px" style="border-radius: 56%;padding: -1px;" src="../logo.jpeg" alt=""></h3>
+        <h3><span style="font-size:1.9rem;">D</span>eal.<span style="font-size:1.9rem;">i</span>o</h3>
 
         <form action="" method="post">
             <input type="search" placeholder="Looking for...?">
@@ -65,7 +65,8 @@ session_start();
     <!------------------------------------------------Navbar for Large Screen------------------------------------->
     <nav id="navbar_me">
 
-        <h1><img width="50px" style="border-radius: 50%;" src="../logo.jpeg" alt=""></h1>
+        <h2><span style="font-size:1.9rem;">D</span>eal.<span style="font-size:1.9rem;">i</span>o</h2>
+
 
         <ul id="ul_large">
             <li><a href="#">Home</a></li>
@@ -76,11 +77,11 @@ session_start();
         </ul>
 
         <?Php
-        if (isset($_SESSION['auth'])) {
+        if (!isset($_SESSION['auth'])) {
             echo <<<Buttons
                         <span>
-                            <a class="auth_btn auth_btn2" href="login.php">Sign in</a>&nbsp;
-                            <!--<a class="auth_btn auth_btn2" href="login.php">Sign up</a>-->
+                            <a class="auth_btn auth_btn2" href="../login/loginpro.php">Sign in</a>&nbsp;
+                            <!--<a class="auth_btn auth_btn2" href="loginpro.php">Sign up</a>-->
                         </span>
                     Buttons;
         } else {
@@ -276,7 +277,13 @@ session_start();
 
     <div id="footers">
         <span id="logo_span">
-            <h1>Logo</h1>
+            <span style="display: flex;
+            align-items: center;justify-content: center;flex-direction: row;margin-top: 6px;">
+                <h1><img width="50px" style="border-radius: 50%;" src="../logo.jpeg" alt=""></h1>&nbsp; &nbsp;
+                <h3><span style="font-size:1.9rem;">D</span>eal.<span style="font-size:1.9rem;">i</span>o
+                </h3>
+            </span>
+
             <span>
                 <h4>Connect with us </h4><br>
                 <span class="logo_span_media"><a href=""><i class="fa-regular fa-envelope"></i></a>

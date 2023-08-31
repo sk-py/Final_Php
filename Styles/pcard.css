@@ -338,8 +338,8 @@
 
  @media screen and (max-width:767px) {
      .slide img {
-         height: 250px;
-
+         height: 15rem;
+        object-fit: cover;
      }
 
      .arrow {
