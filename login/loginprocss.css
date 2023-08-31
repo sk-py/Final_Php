@@ -1,0 +1,214 @@
+. {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url("https://cdn.pixabay.com/photo/2019/04/06/06/44/astronaut-4106766_640.jpg")no-repeat;
+    background-size: cover;
+    background-position: center;
+    animation: animate 5s linear infinite;
+    background-color: purple;
+}
+
+@keyframes animate {
+    100% {
+        filter: hue-rotate(360deg);
+    }
+}
+
+.wrapper {
+    width: 350px;
+    background: transparent;
+    border: 2px solid rgb(255, 255, 255, .2);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px rgb(0, 0, 0, .2);
+    color: white;
+    border-radius: 10px;
+    padding: 30px 40px;
+}
+
+.wrapper h1 {
+    font-size: 36px;
+    text-align: center;
+    text-decoration: solid;
+    text-shadow: 5px 5px 5px white;
+    color: blue;
+
+}
+
+.wrapper .input-box {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    margin: 30px 0;
+}
+
+.input-box input {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    border: 2px solid rgb(255, 255, 255, .2);
+    border-radius: 40px;
+    font-size: 15px;
+    color: white;
+    padding: 0px 0px 0px 0px;
+}
+
+.input-box input::placeholder {
+    color: white;
+    text-align: center;
+}
+
+.input-box i {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+}
+
+.wrapper .rember-forget {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14.5px;
+    margin: -15px 0 15px;
+}
+
+.rember-forget label input {
+    accent-color: #fff;
+    margin-right: 3px;
+}
+
+.rember-forget a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.rember-forget a:hover {
+    text-decoration: underline;
+    color: blue;
+}
+
+.wrapper .btn {
+    width: 100%;
+    height: 45px;
+    background: #fff;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgb(0, 0, 0, .1);
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.wrapper .register-link {
+    font-size: 15px;
+    text-align: center;
+    margin: 20px 0 15px;
+}
+
+.register-link p a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.register-link p a:hover {
+    color: blue;
+}
+
+
+/* /----------------------------------------register--------------------------------------/  */
+/*{
+     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+} */
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.wrapper1 {
+    width: 420px;
+    background: transparent;
+    border: 2px solid rgb(255, 255, 255, .2);
+    box-shadow: 0 0 10px rgb(0, 0, 0, .2);
+    border-radius: 10px;
+    padding: 30px 40px;
+}
+
+.wrapper1 h1 {
+    font-size: 36px;
+    text-align: center;
+    text-shadow: 5px 5px 5px black;
+    color: blue;
+
+}
+
+.wrapper1 .input-box1 {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    margin: 30px 0;
+}
+
+.input-box1 input {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    border: 2px solid rgb(255, 255, 255, .2);
+    border-radius: 40px;
+    font-size: 15px;
+    color: white;
+    padding: 0px 0px 0px 0px;
+}
+
+.input-box1 input::placeholder {
+    color: white;
+    text-align: center;
+}
+
+.input-box1 i {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: skyblue;
+}
+
+.wrapper1 .register {
+    width: 100%;
+    height: 45px;
+    background: #fff;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgb(0, 0, 0, .1);
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+echo {
+    text-align: bottom;
+    color: blue;
+    font-size: 10px;
+}

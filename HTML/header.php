@@ -12,14 +12,16 @@ session_start();
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
     <!-- <link rel="stylesheet" href="../Styles/header.css"> -->
     <link rel="stylesheet" href="../Styles/pcard.css">
+    <link rel="website icon" href="../logo.jpeg" type="jpeg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
+    <!-- <link
         href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&family=Fira+Sans:wght@200;
         400&family=Jost:wght@300;400;600&family=Manrope:wght@200;300;400;500;600;700;800&family=Montserrat:wght@200;300;400;800&family=Varela+Round&display=swap"
-        rel="stylesheet">
+        rel="stylesheet"> -->
+
 
 </head>
 
@@ -27,7 +29,8 @@ session_start();
     <!------------------------------------------------Navbar for small/medium Screen------------------------------------->
 
     <nav id="mobile_navbar">
-        <h3>Log</h3>
+        <h3><img width="45px" style="border-radius: 56%;padding: -1px;" src="../logo.jpeg" alt=""></h3>
+
         <form action="" method="post">
             <input type="search" placeholder="Looking for...?">
             <i class="fa-solid fa-magnifying-glass" style="color:black"></i>
@@ -47,6 +50,7 @@ session_start();
                             </a>
                             <ul class="custom-dropdown-menu">
                             <li><a href="add_products.php">Add Product</a></li>
+                            <li><a href="./user_profile/profile_page.php">Profile Settings</a></li>
                                 <li><a href="#">My Products</a></li>
                                 <li><a href="#">Logout</a></li>
                                 
@@ -61,14 +65,14 @@ session_start();
     <!------------------------------------------------Navbar for Large Screen------------------------------------->
     <nav id="navbar_me">
 
-        <h1>Logo</h1>
+        <h1><img width="50px" style="border-radius: 50%;" src="../logo.jpeg" alt=""></h1>
 
         <ul id="ul_large">
             <li><a href="#">Home</a></li>
-            <li><a href="#">Products</a></li>
+            <li><a href="./all_products.php">Products</a></li>
             <li><a href="#latest_product">Latest Products</a></li>
-            <li><a href="#footer">About us</a></li>
-            <li><a href="#">Contact us</a></li>
+            <li><a href="#about_us">About us</a></li>
+            <li><a href="#footers">Contact us</a></li>
         </ul>
 
         <?Php
@@ -87,6 +91,7 @@ session_start();
                             </a>
                             <ul class="custom-dropdown-menu">
                             <li><a href="add_products.php">Add Product</a></li>
+                             <li><a href="./user_profile/profile_page.php">Profile Settings</a></li>
                                 <li><a href="#">My Products</a></li>
                                 <li><a href="#">Logout</a></li>
                                 
@@ -105,11 +110,11 @@ session_start();
     <!-------------------------------------------------Carousel-------------------------------------------------------------------------------->
     <div class="slide-container">
         <div class="slide">
-            <img src="https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/fb8e9c74644f4ce1.png?q=20" alt="">
+            <img src="../1.png" alt="">
         </div>
 
         <div class=" slide">
-            <img src="https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/9afd532400d4c50b.jpg?q=20" alt="">
+            <img src="../2.png" alt="">
         </div>
 
         <div class=" slide">
@@ -181,7 +186,7 @@ session_start();
         </div>
 
     </section>
-
+    <div id="latest_product"></div>
     <!---------------------------------------------------------------------------------card end------------------------------------------------------------------------------>
 
 
@@ -194,7 +199,7 @@ session_start();
     </div>
     <div style="height: 30vh;width:100svw;background-color: #ffff;">
     </div> -->
-    <div class="wrapper-div" id="latest_product">
+    <div class="wrapper-div">
         <div class="banner-latest">
             <h2>Latest Added Products</h2>
         </div>
@@ -244,7 +249,7 @@ session_start();
             }
             ?>
         </div>
-        <a href="all_products.php" style="text-decoration: none;font-size: 1.2rem;color:blue;margin-top: 1rem;">Explore
+        <a href="all_products.php" style="text-decoration: none;font-size: 1.2rem;color:blue;margin: 2rem;">Explore
             all
             products</a>
 
@@ -256,7 +261,7 @@ session_start();
 
 
 
-    <div class="aboutus">
+    <div class="aboutus" id="about_us">
 
     </div>
 
@@ -326,10 +331,11 @@ session_start();
 
             </span>
             <span>
-                <a href="#"><i class="fa-regular fa-user" style="color: #ffffff;"></i></a><br>
+                <a href="./user_profile/profile_page.php"><i class="fa-regular fa-user"
+                        style="color: #ffffff;"></i></a><br>
             </span>
             <span>
-                <a href="#"><i class="fa-solid fa-circle-info" style="color: #ffffff;"></i></a><br>
+                <a href="#footers"><i class="fa-solid fa-circle-info" style="color: #ffffff;"></i></a><br>
             </span>
 
 
