@@ -1,3 +1,7 @@
+<?php
+session_start();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,33 +14,35 @@
 </head>
 
 <body>
-    <div class="wrapper">
-        <form method="post">
-            <h1> Register </h1>
-            <div class="input-box">
-                <input type="text" name="name" placeholder="Enter your name" required>
-                <i style="color: white;font-size: 2rem;" class='bx bxs-user'></i>
-            </div>
-            <div class="input-box">
-                <input type="text" name="phone" placeholder="Enter phone no" required>
-                <i style="color: white;font-size: 2rem;" class='bx bxs-user'></i>
-            </div>
-            <div class="input-box">
-                <input type="email" name="email" placeholder="@email" required>
-                <i style="color: white;font-size: 2rem;" class='bx bxl-gmail'></i>
-            </div>
-            <div class="input-box">
-                <input type="password" name="password" placeholder="Password" required>
-                <i style="color: white;font-size: 2rem;" class='bx bxs-lock-alt'></i>
-            </div>
-            <input class="btn" type="submit" name="register" value="Register">
-            <div class="register-link">
-                <p>Already have an account ?
-                    <a href="./loginpro.php">Register</a>
-                </p>
-            </div>
+    <div class="blur-overlay">
+        <div class="wrapper">
+            <form method="post">
+                <h1> Register </h1>
+                <div class="input-box">
+                    <input type="text" name="name" placeholder="Enter your name" required>
+                    <i style="color: white;font-size: 2rem;" class='bx bxs-user'></i>
+                </div>
+                <div class="input-box">
+                    <input type="text" name="phone" placeholder="Enter phone no" required>
+                    <i style="color: white;font-size: 2rem;" class='bx bxs-phone'></i>
+                </div>
+                <div class="input-box">
+                    <input type="email" name="email" placeholder="@email" required>
+                    <i style="color: white;font-size: 2rem;" class='bx bxl-gmail'></i>
+                </div>
+                <div class="input-box">
+                    <input type="password" name="password" placeholder="Password" required>
+                    <i style="color: white;font-size: 2rem;" class='bx bxs-lock-alt'></i>
+                </div>
+                <input class="btn" type="submit" name="register" value="Register">
+                <div class="register-link">
+                    <p>Already have an account ?
+                        <a href="./loginpro.php">Login</a>
+                    </p>
+                </div>
+            </form>
+        </div>
     </div>
-    </form>
     <?php
     $host = "localhost";
     $user = "root";
@@ -46,18 +52,28 @@
     $conn = mysqLi_connect($host, $user, $pswd, $db);
     if ($conn) {
         if (isset($_POST['register'])) {
-            $n = $_POST['username'];
-            $e = $_POST['email'];
-            $p = $_POST['password'];
-            if ($n == null || $e == null || $p == null) {
-                echo "feild cannot be emapty";
-            } else {
-                $query = "insert into shop values('$n','$e','$p')";
-                $p = mysqLi_query($conn, $query);
+            $name = $_POST['name'];
+            $email = $_POST['email'];
+            $pswd = $_POST['password'];
+            $phone = $_POST['phone'];
+            $user_prof = "default_img.png";
+            $_SESSION['uemail'] = $email;
+            $query = "INSERT INTO `users`(`name`, `email`, `password`, `phone`, `user_pp`) VALUES('$name','$email','$pswd','$phone','$user_prof')";
+            $success = mysqLi_query($conn, $query);
 
+
+            if ($success) {
+                $_SESSION['authorized'] = true;
+                header('location:../HTML/header.php');
+            } else {
+                header('location:./login.php');
             }
+
+
+
         }
     }
+
     ?>
 
 </body>

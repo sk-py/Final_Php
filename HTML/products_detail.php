@@ -1,13 +1,28 @@
 <?Php
+session_start();
 include '../SSS/connection.php';
 ?>
 
 <?Php
 
-if (isset($_POST['prod_view_btn'])) {
-    $pid = $_POST['prod_view_btn'];
+if (isset($_GET['prod_view_btn'])) {
+    $pid = $_GET['prod_view_btn'];
+    $uemail = $_SESSION['uemail'];
     $query = "SELECT * FROM `product_table` WHERE `id`=$pid";
     $result = mysqli_query($conn, $query);
+
+
+
+
+    // Create or update the recently viewed products cookie
+    $recentlyViewed = isset($_COOKIE['recently_viewed']) ? json_decode($_COOKIE['recently_viewed']) : [];
+    if (!in_array($pid, $recentlyViewed)) {
+        array_unshift($recentlyViewed, $pid);
+        setcookie('recently_viewed', json_encode($recentlyViewed), time() + 3600 * 24 * 7, '/');
+    }
+
+
+
     while ($p_details = mysqli_fetch_assoc($result)) {
         $pid = $p_details['id'];
         $description = $p_details['description'];

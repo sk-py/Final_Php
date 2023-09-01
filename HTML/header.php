@@ -1,6 +1,6 @@
 <?Php
-include '../SSS/connection.php';
 session_start();
+include '../SSS/connection.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,10 +36,10 @@ session_start();
             <i class="fa-solid fa-magnifying-glass" style="color:black"></i>
         </form>
         <?Php
-        if (isset($_SESSION['auth'])) {
+        if (!isset($_SESSION['authorized'])) {
             echo <<<Buttons
                         <span>
-                            <a class="auth_btn" style="background-color: #fff;color:black" href="login.php">Sign in</a>&nbsp;&nbsp;
+                            <a class="auth_btn" style="background-color: #fff;color:black" href="../login/loginpro.php">Sign in</a>&nbsp;&nbsp;
                         </span>
                     Buttons;
         } else {
@@ -51,9 +51,8 @@ session_start();
                             <ul class="custom-dropdown-menu">
                             <li><a href="add_products.php">Add Product</a></li>
                             <li><a href="./user_profile/profile_page.php">Profile Settings</a></li>
-                                <li><a href="#">My Products</a></li>
-                                <li><a href="#">Logout</a></li>
-                                
+                                <li><a href="./my_products.php">My Products</a></li>
+                                <li><form action="../SSS/auth.php" type="post"><input type="submit" name="logout" value="Logout"></form></li>
                             </ul>
                         </div>
 
@@ -77,29 +76,29 @@ session_start();
         </ul>
 
         <?Php
-        if (!isset($_SESSION['auth'])) {
-            echo <<<Buttons
-                        <span>
-                            <a class="auth_btn auth_btn2" href="../login/loginpro.php">Sign in</a>&nbsp;
-                            <!--<a class="auth_btn auth_btn2" href="loginpro.php">Sign up</a>-->
-                        </span>
-                    Buttons;
-        } else {
+        if (isset($_SESSION['authorized'])) {
             echo <<<Dropdown
-                          <div class="custom-dropdown custom-dropdown_mobile ">
-                            <a class="custom-dropdown-toggle" href="#">
-                               <h3 style="color: #ffffff;display:flex;align-items:center;margin-bottom:0.5rem"><a target="blank" href="https://img.freepik.com/premium-vector/businessman-avatar-illustration-cartoon-user-portrait-user-profile-icon_118339-4382.jpg"><img width="35px" style="border-radius:50%" src="https://img.freepik.com/premium-vector/businessman-avatar-illustration-cartoon-user-portrait-user-profile-icon_118339-4382.jpg" alt="profile-pic"></a>&nbsp; Student &nbsp;<i class="fa-solid fa-caret-down" style="color: #ffffff;"></i></h3> 
-                            </a>
-                            <ul class="custom-dropdown-menu">
-                            <li><a href="add_products.php">Add Product</a></li>
-                             <li><a href="./user_profile/profile_page.php">Profile Settings</a></li>
-                                <li><a href="#">My Products</a></li>
-                                <li><a href="#">Logout</a></li>
-                                
-                            </ul>
-                        </div>
-
+                             <div class="custom-dropdown custom-dropdown_mobile ">
+                                    <a class="custom-dropdown-toggle" href="#">
+                                    <h3 style="color: #ffffff;display:flex;align-items:center;margin-bottom:0.5rem"><a target="blank" href="https://img.freepik.com/premium-vector/businessman-avatar-illustration-cartoon-user-portrait-user-profile-icon_118339-4382.jpg"><img width="35px" style="border-radius:50%" src="https://img.freepik.com/premium-vector/businessman-avatar-illustration-cartoon-user-portrait-user-profile-icon_118339-4382.jpg" alt="profile-pic"></a>&nbsp; Student &nbsp;<i class="fa-solid fa-caret-down" style="color: #ffffff;"></i></h3> 
+                                    </a>
+                                    <ul class="custom-dropdown-menu">
+                                    <li><a href="add_products.php">Add Product</a></li>
+                                     <li><a href="./user_profile/profile_page.php">Profile Settings</a></li>
+                                        <li><a href="./my_products.php">My Products</a></li>
+                                        <li><form action="../SSS/auth.php" type="POST"><input type="submit" style="background-color: #fff;border:none;font-size:1rem;cursor:pointer" name="logout" value="Logout"></form></li>
+                                        
+                                        </ul>
+                                        </div>
                     Dropdown;
+
+        } else {
+            echo <<<Buttons
+                                        <span>
+                                        <a class="auth_btn auth_btn2" href="../login/loginpro.php">Sign in</a>&nbsp;
+                                        <!--<a class="auth_btn auth_btn2" href="loginpro.php">Sign up</a>-->
+                                        </span>
+                                        Buttons;
         }
         ?>
 
@@ -187,72 +186,144 @@ session_start();
         </div>
 
     </section>
-    <div id="latest_product"></div>
     <!---------------------------------------------------------------------------------card end------------------------------------------------------------------------------>
+    <!-- ----------------------------------------------------------------------Category Cards ENd------------------------------------------------------------------------ -->
+
+    <div class="recent_products_container">
+        <div class="recent_products_wrapper">
+
+        </div>
+    </div>
 
 
 
 
-    <!-- ----------------------------------------------------------------------Category Cards------------------------------------------------------------------------ -->
 
+    <!-- --------------------------------------------------------------------------------Recently viewed--------------------------------------------------------------------------- -->
 
+    <div id="latest_product"></div>
     <!-- <div style="height: 10vh;width:100svw;background-color: grey;padding: 0;margin-top:-4px;">
     </div>
     <div style="height: 30vh;width:100svw;background-color: #ffff;">
     </div> -->
     <div class="wrapper-div">
-        <div class="banner-latest">
-            <h2>Latest Added Products</h2>
+        <div class="banner-recent">
+            <h3>Recently Viewed Items</h3>
         </div>
-        <div class="latest_products_section">
+        <div class="latest_products_section latest_products_section2">
             <?Php
-            $query = "SELECT * FROM `product_table` ORDER BY `id` DESC LIMIT 8";
-            $result = mysqli_query($conn, $query);
 
-            while ($fetch = mysqli_fetch_assoc($result)) {
-                $pid = $fetch['id'];
-                $description = $fetch['description'];
-                $product_name = $fetch['product_name'];
-                $price = $fetch['price'];
-                $image = $fetch['image'];
+            $recentlyViewed = isset($_COOKIE['recently_viewed']) ? json_decode($_COOKIE['recently_viewed']) : [];
 
-                $truncatedDescription = strlen($description) > 80 ? substr($description, 0, 80) . "..." : $description;
-                ?>
-                <div class="product_card">
-                    <span id="prod_img_span">
-                        <img src="<?Php echo FETCH_PATH . $image ?>" alt="">
-                    </span>
-                    <div class="content-div">
-                        <h4>
-                            <?Php echo $product_name ?>
-                        </h4>
-                        <h5 id="trunc_desc">
-                            <?Php echo $truncatedDescription ?>
-                        </h5>
-                        <p>
-                            <?Php echo $price ?> &#8377;
-                        </p>
+            foreach (array_slice($recentlyViewed, 0, 4) as $prod_id) {
+                $query = "SELECT * FROM `product_table` where `id`='$prod_id'";
+                $result = mysqli_query($conn, $query);
 
+                while ($fetch = mysqli_fetch_assoc($result)) {
+                    $pid = $fetch['id'];
+                    $description = $fetch['description'];
+                    $product_name = $fetch['product_name'];
+                    $price = $fetch['price'];
+                    $image = $fetch['image'];
+
+                    $truncatedDescription = strlen($description) > 80 ? substr($description, 0, 80) . "..." : $description; ?>
+
+                    <div class="product_card2">
+                        <span id="prod_img_span">
+                            <img src="<?Php echo FETCH_PATH . $image ?>" alt="">
+                        </span>
+                        <div class="content-div">
+                            <h4>
+                                <?Php echo $product_name ?>
+                            </h4>
+                            <h5 id="trunc_desc">
+                                <?Php echo $truncatedDescription ?>
+                            </h5>
+                            <p>
+                                <?Php echo $price ?> &#8377;
+                            </p>
+
+                        </div>
+                        <form action="products_detail.php" method="GET">
+                            <button type="submit" value="<?Php echo $pid ?>" name="prod_view_btn" id="prod_view_btn">Detailed
+                                View
+                            </button>
+                        </form>
+                        <sub style="font-size:0.8rem;padding: 0.2rem;">
+                            Last updated -
+                            <?Php echo $fetch['last_updated'] ?>
+                        </sub>
                     </div>
-                    <form action="products_detail.php" method="Post">
-                        <button type="submit" value="<?Php echo $pid ?>" name="prod_view_btn" id="prod_view_btn">Detailed
-                            View
-                        </button>
-                    </form>
-                    <sub style="font-size:0.8rem;padding: 0.2rem;">
-                        Last updated -
-                        <?Php echo $fetch['last_updated'] ?>
-                    </sub>
-                </div>
 
-                <?Php
 
+
+                    <?Php
+                }
             }
+
             ?>
         </div>
-        <a href="all_products.php" style="text-decoration: none;font-size: 1.2rem;color:blue;margin: 2rem;">Explore
-            all
-            products</a>
+
+        <div>
+            <a href="all_products.php" style="text-decoration: none;font-size: 1.2rem;color:blue;margin: 2rem;">Continue
+                your exploration
+            </a>
+
+        </div>
+    </div>
+
+    <div class="banner-latest">
+        <h2>Latest Added Products</h2>
+    </div>
+    <div class="latest_products_section">
+        <?Php
+        $query = "SELECT * FROM `product_table` ORDER BY `id` DESC LIMIT 8";
+        $result = mysqli_query($conn, $query);
+
+        while ($fetch = mysqli_fetch_assoc($result)) {
+            $pid = $fetch['id'];
+            $description = $fetch['description'];
+            $product_name = $fetch['product_name'];
+            $price = $fetch['price'];
+            $image = $fetch['image'];
+
+            $truncatedDescription = strlen($description) > 80 ? substr($description, 0, 80) . "..." : $description;
+            ?>
+            <div class="product_card">
+                <span id="prod_img_span">
+                    <img src="<?Php echo FETCH_PATH . $image ?>" alt="">
+                </span>
+                <div class="content-div">
+                    <h4>
+                        <?Php echo $product_name ?>
+                    </h4>
+                    <h5 id="trunc_desc">
+                        <?Php echo $truncatedDescription ?>
+                    </h5>
+                    <p>
+                        <?Php echo $price ?> &#8377;
+                    </p>
+
+                </div>
+                <form action="products_detail.php" method="GET">
+                    <button type="submit" value="<?Php echo $pid ?>" name="prod_view_btn" id="prod_view_btn">Detailed
+                        View
+                    </button>
+                </form>
+                <sub style="font-size:0.8rem;padding: 0.2rem;">
+                    Last updated -
+                    <?Php echo $fetch['last_updated'] ?>
+                </sub>
+            </div>
+
+            <?Php
+
+        }
+        ?>
+    </div>
+    <a href="all_products.php" style="text-decoration: none;font-size: 1.2rem;color:blue;margin: 2rem;">Explore
+        all
+        products</a>
 
     </div>
 

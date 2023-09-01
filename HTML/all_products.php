@@ -142,7 +142,7 @@
                     </p>
 
                 </div>
-                <form action="products_detail.php" method="Post">
+                <form action="products_detail.php" method="Get">
                     <button type="submit" value="<?Php echo $pid ?>" name="prod_view_btn" id="prod_view_btn">Detailed
                         View
                     </button>
@@ -173,12 +173,13 @@
         $(document).ready(function () {
             const dataContainer = $("#all_products_page");
             const loadMoreButton = $("#load-more");
+            // const productId = $('#prod_view_btn');
             let currentPage = 1;
             function loadMoreData() {
                 var page = currentPage;
                 $.ajax({
                     url: "../SSS/auth.php",
-                    method: "POST",
+                    method: "GET",
                     data: { page: page },
                     success: function (response) {
                         dataContainer.append(response);

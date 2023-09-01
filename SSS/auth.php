@@ -1,9 +1,15 @@
 <?php
+session_start();
 include 'connection.php';
 
-if (isset($_POST['page'])) {
+if (isset($_POST['logout'])) {
+    session_destroy();
+    header('location:../Final_Php/HTML/header.php');
+}
 
-    $page = $_POST['page'];
+if (isset($_GET['page'])) {
+
+    $page = $_GET['page'];
     $recordsPerPage = 8;
     $startIndex = $page * $recordsPerPage;
     $query = "SELECT * FROM `product_table` LIMIT $startIndex, $recordsPerPage";
@@ -38,7 +44,7 @@ if (isset($_POST['page'])) {
                 </p>
 
             </div>
-            <form action="products_detail.php" method="Post">
+            <form action="products_detail.php" method="Get">
                 <button type="submit" value="<?Php echo $pid ?>" name="prod_view_btn" id="prod_view_btn">Detailed
                     View
                 </button>
@@ -59,12 +65,12 @@ if (isset($_POST['add_prods_btn'])) {
     $pdesc = $_POST["p_desc"];
     $price = $_POST["price"];
     $pcategory = $_POST["category"];
-
+    $posted_by = $_SESSION['uemail'];
     $imgpath = random_int(0, 99999) . $_FILES['prod_img']['name'];
     $temploc = $_FILES['prod_img']['tmp_name'];
 
 
-    $q = "INSERT INTO `product_table`(`product_name`, `category`, `description`, `price`, `image`,`last_updated`) VALUES ('$pname','$pcategory','$pdesc','$price','$imgpath', NOW())";
+    $q = "INSERT INTO `product_table`(`product_name`, `category`, `description`, `price`, `image`,`last_updated`,`posted_by`) VALUES ('$pname','$pcategory','$pdesc','$price','$imgpath', NOW(),'$posted_by')";
     $query = mysqli_query($conn, $q);
 
     if ($query) {
@@ -75,6 +81,7 @@ if (isset($_POST['add_prods_btn'])) {
         echo "Error: " . mysqli_error($conn);
     }
 }
+
 
 
 
