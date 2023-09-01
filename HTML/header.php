@@ -115,11 +115,11 @@ session_start();
         </div>
 
         <div class=" slide">
-            <img src="../2.png" alt="">
+            <img src="" alt="">
         </div>
 
         <div class=" slide">
-            <img src="https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/fb8e9c74644f4ce1.png?q=20" alt="">
+            <img src="../images/buy & sell.png" alt="">
         </div>
 
         <div class=" slide">
@@ -137,10 +137,10 @@ session_start();
     <section class="sec-1">
         <div class="box">
             <div class="white">
-                <p>Grocery</p>
+                <p>Mobile</p>
             </div>
             <img
-                src="https://images-eu.ssl-images-amazon.com/images/G/31/img22/Wearables/PC_CategoryCard_379X304_1._SY304_CB614835787_.jpg">
+                src="../images/asset 3.png">
         </div>
 
         <div class="box">
@@ -148,7 +148,7 @@ session_start();
                 <p>Fashion</p>
             </div>
             <img
-                src="https://images-eu.ssl-images-amazon.com/images/G/31/img22/Wearables/PC_CategoryCard_379X304_1._SY304_CB614835787_.jpg">
+                src="../images/asset 4.png">
         </div>
 
         <div class="box">
@@ -156,7 +156,7 @@ session_start();
                 <p>Electronics</p>
             </div>
             <img
-                src="https://images-eu.ssl-images-amazon.com/images/G/31/img22/Wearables/PC_CategoryCard_379X304_1._SY304_CB614835787_.jpg">
+                src="../images/asset 7.png">
         </div>
 
     </section>
@@ -167,7 +167,7 @@ session_start();
                 <p>Two Whellers</p>
             </div>
             <img
-                src="https://images-eu.ssl-images-amazon.com/images/G/31/img22/Wearables/PC_CategoryCard_379X304_1._SY304_CB614835787_.jpg">
+                src="../images/asset 10.png">
         </div>
 
         <div class="box">
@@ -175,7 +175,7 @@ session_start();
                 <p>Home and Furniture</p>
             </div>
             <img
-                src="https://images-eu.ssl-images-amazon.com/images/G/31/img22/Wearables/PC_CategoryCard_379X304_1._SY304_CB614835787_.jpg">
+                src="../images/asset 6.jpeg">
         </div>
 
         <div class="box">
@@ -183,8 +183,8 @@ session_start();
                 <p>Toys</p>
             </div>
             <img
-                src="https://images-eu.ssl-images-amazon.com/images/G/31/img22/Wearables/PC_CategoryCard_379X304_1._SY304_CB614835787_.jpg">
-        </div>
+                src="../images/asset 9.png">
+    </div>
 
     </section>
     <div id="latest_product"></div>

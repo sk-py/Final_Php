@@ -19,7 +19,7 @@
             </div>
             <div class="input-box">
                 <input type="text" name="phone" placeholder="Enter phone no" required>
-                <i style="color: white;font-size: 2rem;" class='bx bxs-user'></i>
+                <i style="color: white;font-size: 2rem;" class='bx bxs-phone'></i>
             </div>
             <div class="input-box">
                 <input type="email" name="email" placeholder="@email" required>
@@ -32,7 +32,7 @@
             <input class="btn" type="submit" name="register" value="Register">
             <div class="register-link">
                 <p>Already have an account ?
-                    <a href="./loginpro.php">Register</a>
+                    <a href="./loginpro.php">Login</a>
                 </p>
             </div>
     </div>
