@@ -1,5 +1,7 @@
-<?Php include '../SSS/connection.php' ?>
-
+<?Php
+session_start();
+include '../SSS/connection.php';
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -40,24 +42,23 @@
             <i class="fa-solid fa-magnifying-glass" style="color:black"></i>
         </form>
         <?Php
-        if (isset($_SESSION['auth'])) {
+        if (!isset($_SESSION['uemail'])) {
             echo <<<Buttons
                         <span>
-                            <a class="auth_btn" style="background-color: #fff;color:black" href="login.php">Sign in</a>&nbsp;&nbsp;
+                            <a class="auth_btn" style="background-color: #fff;color:black" href="../login/loginpro.php">Sign in</a>&nbsp;&nbsp;
                         </span>
                     Buttons;
         } else {
             echo <<<Dropdown
-                          <div class="custom-dropdown">
+                      <div class="custom-dropdown">
                             <a class="custom-dropdown-toggle" href="#">
                                <h3 style="color: #ffffff;display:flex;align-items:center;"><img width="35px" style="border-radius:50%" src="https://img.freepik.com/premium-vector/businessman-avatar-illustration-cartoon-user-portrait-user-profile-icon_118339-4382.jpg" alt="profile-pic">&nbsp;&nbsp;<i class="fa-solid fa-caret-down" style="color: #ffffff;"></i></h3> 
                             </a>
                             <ul class="custom-dropdown-menu">
                             <li><a href="add_products.php">Add Product</a></li>
                             <li><a href="./user_profile/profile_page.php">Profile Settings</a></li>
-                                <li><a href="#">My Products</a></li>
-                                <li><a href="#">Logout</a></li>
-                                
+                                <li><a href="./my_products.php">My Products</a></li>
+                            <li><form action="../SSS/auth.php" type="POST"><input type="submit" style="background-color: #fff;border:none;font-size:1rem;cursor:pointer" name="logoutbtn" value="Logout"></form></li>
                             </ul>
                         </div>
 
@@ -80,27 +81,27 @@
         </ul>
 
         <?Php
-        if (isset($_SESSION['auth'])) {
+        if (!isset($_SESSION['uemail'])) {
             echo <<<Buttons
                         <span>
-                            <a class="auth_btn auth_btn2" href="login.php">Sign in</a>&nbsp;
+                            <a class="auth_btn auth_btn2" href="../login/loginpro.php">Sign in</a>&nbsp;
                             <!--<a class="auth_btn auth_btn2" href="login.php">Sign up</a>-->
                         </span>
                     Buttons;
         } else {
             echo <<<Dropdown
-                          <div class="custom-dropdown custom-dropdown_mobile ">
-                            <a class="custom-dropdown-toggle" href="#">
-                               <h3 style="color: #ffffff;display:flex;align-items:center;margin-bottom:0.5rem"><a target="blank" href="https://img.freepik.com/premium-vector/businessman-avatar-illustration-cartoon-user-portrait-user-profile-icon_118339-4382.jpg"><img width="35px" style="border-radius:50%" src="https://img.freepik.com/premium-vector/businessman-avatar-illustration-cartoon-user-portrait-user-profile-icon_118339-4382.jpg" alt="profile-pic"></a>&nbsp; Student &nbsp;<i class="fa-solid fa-caret-down" style="color: #ffffff;"></i></h3> 
-                            </a>
-                            <ul class="custom-dropdown-menu">
-                            <li><a href="add_products.php">Add Product</a></li>
-                             <li><a href="./user_profile/profile_page.php">Profile Settings</a></li>
-                                <li><a href="#">My Products</a></li>
-                                <li><a href="#">Logout</a></li>
-                                
-                            </ul>
-                        </div>
+                            <div class="custom-dropdown custom-dropdown_mobile ">
+                                    <a class="custom-dropdown-toggle" href="#">
+                                    <h3 style="color: #ffffff;display:flex;align-items:center;margin-bottom:0.5rem"><a target="blank" href="https://img.freepik.com/premium-vector/businessman-avatar-illustration-cartoon-user-portrait-user-profile-icon_118339-4382.jpg"><img width="35px" style="border-radius:50%" src="https://img.freepik.com/premium-vector/businessman-avatar-illustration-cartoon-user-portrait-user-profile-icon_118339-4382.jpg" alt="profile-pic"></a>&nbsp; Student &nbsp;<i class="fa-solid fa-caret-down" style="color: #ffffff;"></i></h3> 
+                                    </a>
+                                    <ul class="custom-dropdown-menu">
+                                    <li><a href="add_products.php">Add Product</a></li>
+                                     <li><a href="./user_profile/profile_page.php">Profile Settings</a></li>
+                                        <li><a href="./my_products.php">My Products</a></li>
+                                        <li><form action="../SSS/auth.php" type="POST"><input type="submit" style="background-color: #fff;border:none;font-size:1rem;cursor:pointer" name="logoutbtn" value="Logout"></form></li>
+                                        
+                                        </ul>
+                                        </div>
 
                     Dropdown;
         }

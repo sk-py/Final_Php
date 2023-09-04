@@ -1,5 +1,9 @@
 <?Php
+session_start();
 include '../SSS/connection.php';
+if (!isset($_SESSION['uemail'])) {
+    header('location:../login/loginpro.php');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

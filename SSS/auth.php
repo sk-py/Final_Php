@@ -2,10 +2,6 @@
 session_start();
 include 'connection.php';
 
-if (isset($_POST['logout'])) {
-    session_destroy();
-    header('location:../Final_Php/HTML/header.php');
-}
 
 if (isset($_GET['page'])) {
 
@@ -66,11 +62,13 @@ if (isset($_POST['add_prods_btn'])) {
     $price = $_POST["price"];
     $pcategory = $_POST["category"];
     $posted_by = $_SESSION['uemail'];
+    $posted_by_name = $_SESSION['name'];
     $imgpath = random_int(0, 99999) . $_FILES['prod_img']['name'];
     $temploc = $_FILES['prod_img']['tmp_name'];
 
+    $clean_desc = mysqli_escape_string($conn, $pdesc);
 
-    $q = "INSERT INTO `product_table`(`product_name`, `category`, `description`, `price`, `image`,`last_updated`,`posted_by`) VALUES ('$pname','$pcategory','$pdesc','$price','$imgpath', NOW(),'$posted_by')";
+    $q = "INSERT INTO `product_table`(`product_name`, `category`, `description`, `price`, `image`,`last_updated`,`posted_by`,`posted_by_name`) VALUES ('$pname','$pcategory','$clean_desc','$price','$imgpath', NOW(),'$posted_by','$posted_by_name')";
     $query = mysqli_query($conn, $q);
 
     if ($query) {
@@ -83,6 +81,57 @@ if (isset($_POST['add_prods_btn'])) {
 }
 
 
+
+if (isset($_POST['regbtn'])) {
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $phone = $_POST['phone'];
+    $pswd = $_POST['password'];
+    $user_pp = "default_img.png";
+
+    $query = "INSERT INTO users (`name`,`email`,`password`,`phone`,`user_pp`) Values ('$name','$email','$pswd','$phone','$user_pp')";
+    $response = mysqLi_query($conn, $query);
+
+    if ($response) {
+        $_SESSION['uemail'] = $email;
+        $_SESSION['name'] = $name;
+        // $_SESSION['authorized'] = true;
+        header('location:../HTML/header.php');
+    } else {
+        echo "<center><h3>An unknown error occurred while signing you up <br> Please try again  </h3></center>";
+    }
+
+
+}
+
+
+
+
+
+
+if (isset($_POST['logbtn'])) {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $res1 = mysqLi_query($conn, "select * from users where email='$email' && password='$password'");
+    foreach ($res1 as $nres) {
+        $_SESSION['name'] = $nres['name'];
+
+    }
+
+    if (mysqli_num_rows($res1) > 0) {
+        $_SESSION['uemail'] = $email;
+        // $_SESSION['authorized'] = true;
+        header("location:../HTML/header.php");
+    } else {
+        echo "<center><h3>Incorrect Password or Email Entered <br> Please try again  </h3></center>";
+    }
+}
+
+
+if (isset($_GET['logoutbtn'])) {
+    session_destroy();
+    header('location:../login/loginpro.php');
+}
 
 
 

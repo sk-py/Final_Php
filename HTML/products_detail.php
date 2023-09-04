@@ -7,14 +7,17 @@ include '../SSS/connection.php';
 
 if (isset($_GET['prod_view_btn'])) {
     $pid = $_GET['prod_view_btn'];
-    $uemail = $_SESSION['uemail'];
     $query = "SELECT * FROM `product_table` WHERE `id`=$pid";
     $result = mysqli_query($conn, $query);
 
 
 
-
     // Create or update the recently viewed products cookie
+    // if (isset($_SESSION['authorized'])) {
+
+    //     $uemail = $_SESSION['uemail'];
+    // }
+
     $recentlyViewed = isset($_COOKIE['recently_viewed']) ? json_decode($_COOKIE['recently_viewed']) : [];
     if (!in_array($pid, $recentlyViewed)) {
         array_unshift($recentlyViewed, $pid);
@@ -29,6 +32,7 @@ if (isset($_GET['prod_view_btn'])) {
         $product_name = $p_details['product_name'];
         $price = $p_details['price'];
         $image = $p_details['image'];
+        $uploaded = $p_details['posted_by_name'];
         ?>
         <!DOCTYPE html>
         <html lang="en">
@@ -85,9 +89,29 @@ if (isset($_GET['prod_view_btn'])) {
                             <?Php echo $description ?>
                         </h4>
                     </div>
+                    <div id="cont_span2">
+                        <label for="posted_by" style="font-weight:400;font-size:1.5rem;">Uploaded by
+                            -
+                            <?Php echo $uploaded ?>
+                        </label>
+                        <!-- <h4 id="desc">
+                            
+                        </h4> -->
+                    </div>
                 </div>
-                <a id="contact_btn" href="mailto:shaikh56742@gmail.com">Contact Seller
-                </a>
+                <?Php if (isset($_SESSION['uemail'])) {
+                    ?>
+                    <a id="contact_btn" href="mailto:shaikh56742@gmail.com">Contact Seller
+                    </a>
+                    <?php
+                } else { ?>
+
+                    <a id="contact_btn" href="../login/loginpro.php">Login to make a deal </a>
+
+                    <?Php
+                }
+
+                ?>
             </div>
             <script>
                 document.addEventListener('DOMContentLoaded', function () {
