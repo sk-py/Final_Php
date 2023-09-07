@@ -89,21 +89,37 @@ include '../SSS/connection.php';
                         </span>
                     Buttons;
         } else {
-            echo <<<Dropdown
-                            <div class="custom-dropdown custom-dropdown_mobile ">
-                                    <a class="custom-dropdown-toggle" href="#">
-                                    <h3 style="color: #ffffff;display:flex;align-items:center;margin-bottom:0.5rem"><a target="blank" href="https://img.freepik.com/premium-vector/businessman-avatar-illustration-cartoon-user-portrait-user-profile-icon_118339-4382.jpg"><img width="35px" style="border-radius:50%" src="https://img.freepik.com/premium-vector/businessman-avatar-illustration-cartoon-user-portrait-user-profile-icon_118339-4382.jpg" alt="profile-pic"></a>&nbsp; Student &nbsp;<i class="fa-solid fa-caret-down" style="color: #ffffff;"></i></h3> 
-                                    </a>
-                                    <ul class="custom-dropdown-menu">
-                                    <li><a href="add_products.php">Add Product</a></li>
-                                     <li><a href="./user_profile/profile_page.php">Profile Settings</a></li>
-                                        <li><a href="./my_products.php">My Products</a></li>
-                                        <li><form action="../SSS/auth.php" type="POST"><input type="submit" style="background-color: #fff;border:none;font-size:1rem;cursor:pointer" name="logoutbtn" value="Logout"></form></li>
-                                        
-                                        </ul>
-                                        </div>
+            $res1 = mysqLi_query($conn, "select user_pp from users where email='$_SESSION[uemail]'");
+            foreach ($res1 as $nres) {
+                $_SESSION['user_img'] = $nres['user_pp'];
+            }
 
-                    Dropdown;
+            ?>
+        <div class="custom-dropdown custom-dropdown_mobile ">
+            <a class="custom-dropdown-toggle" href="#">
+                <h3 style="color: #ffffff;display:flex;align-items:center;margin-bottom:0.5rem"><a target="blank"
+                        href="../user_img/<?Php echo $_SESSION['user_img'] ?>">
+                        <img width="35px" style="border-radius:50%"
+                            src="../user_img/<?Php echo $_SESSION['user_img'] ?>" alt=""></a>&nbsp;
+                    <p>
+                        <?Php echo $_SESSION['name'] ?>
+                    </p> &nbsp;<i class="fa-solid fa-caret-down" style="color: #ffffff;"></i>
+                </h3>
+            </a>
+            <ul class="custom-dropdown-menu">
+                <li><a href="add_products.php">Add Product</a></li>
+                <li><a href="./user_profile/profile_page.php">Profile Settings</a></li>
+                <li><a href="./my_products.php">My Products</a></li>
+                <li>
+                    <form action="../SSS/auth.php" type="POST"><input type="submit"
+                            style="background-color: #fff;border:none;font-size:1rem;cursor:pointer" name="logoutbtn"
+                            value="Logout"></form>
+                </li>
+
+            </ul>
+        </div>
+
+        <?Php
         }
         ?>
 

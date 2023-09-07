@@ -12,12 +12,6 @@ if (isset($_GET['prod_view_btn'])) {
 
 
 
-    // Create or update the recently viewed products cookie
-    // if (isset($_SESSION['authorized'])) {
-
-    //     $uemail = $_SESSION['uemail'];
-    // }
-
     $recentlyViewed = isset($_COOKIE['recently_viewed']) ? json_decode($_COOKIE['recently_viewed']) : [];
     if (!in_array($pid, $recentlyViewed)) {
         array_unshift($recentlyViewed, $pid);
@@ -31,6 +25,7 @@ if (isset($_GET['prod_view_btn'])) {
         $description = $p_details['description'];
         $product_name = $p_details['product_name'];
         $price = $p_details['price'];
+        $email = $p_details['posted_by'];
         $image = $p_details['image'];
         $uploaded = $p_details['posted_by_name'];
         ?>
@@ -89,11 +84,19 @@ if (isset($_GET['prod_view_btn'])) {
                             <?Php echo $description ?>
                         </h4>
                     </div>
-                    <div id="cont_span2">
+                    <div id="cont_span0">
                         <label for="posted_by" style="font-weight:400;font-size:1.5rem;">Uploaded by
                             -
                             <?Php echo $uploaded ?>
                         </label>
+
+                        <img src="<?Php
+                        $query = "SELECT `user_pp` FROM `users` WHERE `email`='$email'";
+                        $res = mysqli_query($conn, $query);
+                        foreach ($res as $uimg) {
+                            echo "../user_img/" . $uimg['user_pp'];
+                        } ?>" alt="" style="width: 45px;border-radius: 50%;height: 45px;object-fit:cover;">
+
                         <!-- <h4 id="desc">
                             
                         </h4> -->
@@ -101,7 +104,7 @@ if (isset($_GET['prod_view_btn'])) {
                 </div>
                 <?Php if (isset($_SESSION['uemail'])) {
                     ?>
-                    <a id="contact_btn" href="mailto:shaikh56742@gmail.com">Contact Seller
+                    <a id="contact_btn" href="mailto:<?Php echo $email ?>">Contact Seller
                     </a>
                     <?php
                 } else { ?>
@@ -131,56 +134,49 @@ if (isset($_GET['prod_view_btn'])) {
                 });
             </script>
 
-
-
-
-
-
-
-
-
-
-            <!-- 
-            <div class="product_card">
-                <span id="prod_img_span">
-                    <img src="<?Php echo FETCH_PATH . $image ?>" alt="">
-                </span>
-                <div class="content-div">
-                    <h4>
-                        <?Php echo $product_name ?>
-                    </h4>
-                    -- <h5 id="trunc_desc">
-                        <?Php echo $description ?>
-                    </h5> ->
-                    <p>
-                        <?Php echo $price ?> &#8377;
-                    </p>
-
-                </div>
-
-                <sub style="font-size:0.8rem;padding: 0.2rem;">
-                    Last updated -
-                    <?Php echo $p_details['last_updated'] ?>
-                </sub>
-            </div>
-
-
- -->
-
-
-
-
-
-
-
-
-
             <?Php
     }
 }
 
+if (isset($_POST['updt_prods_btn'])) {
+    $name = $_POST['p_name'];
+    $pid = $_POST['updt_prods_btn'];
+    $p_desc = $_POST['p_desc'];
+    $price = $_POST['price'];
+    if ($_FILES['prod_img']['size'] > 0) {
+        $query = "SELECT `image` from `product_table` WHERE `id`='$pid'";
+        $pre = mysqli_query($conn, $query);
 
+        while ($pre_img = mysqli_fetch_assoc($pre)) {
+            if (file_exists(FETCH_PATH . $pre_img['image'])) {
+                unlink(FETCH_PATH . $pre_img['image']);
+            }
+        }
+
+
+        $p_img = random_int(0, 99999) . $_FILES['prod_img']['name'];
+        $temploc = $_FILES['prod_img']['tmp_name'];
+
+
+        move_uploaded_file($temploc, FETCH_PATH . $p_img);
+        $query = "UPDATE `product_table` SET `product_name`='$name',`description`='$p_desc',`price`='$price',`image`='$p_img',`last_updated`= NOW() WHERE `id`='$pid'";
+    } else {
+        $query = "UPDATE `product_table` SET `product_name`='$name',`description`='$p_desc',`price`='$price',`last_updated`= NOW() WHERE `id`='$pid'";
+
+    }
+    $response = mysqLi_query($conn, $query);
+
+    if ($response) {
+
+        // header('location:./my_products.php');
+    } else {
+        echo "An Unknown error occurred while updating details please try again";
+    }
+}
 ?>
+
+
+
 </body>
 
 </html>

@@ -54,9 +54,12 @@ include '../SSS/connection.php';
                             </p>
 
                         </div>
-                        <form action="products_detail.php" method="GET">
-                            <button type="submit" value="<?Php echo $pid ?>" name="prod_view_btn" id="prod_view_btn">Detailed
-                                View
+                        <form action="./prod_update.php" method="POST">
+                            <button type="submit" value="<?Php echo $pid ?>" name="prod_update_btn" id="prod_view_btn">Update
+                                item
+                            </button>
+                            <button type="submit" value="<?Php echo $pid ?>" name="prod_dltBtn" id="prod_dltBtn">Delete
+                                item
                             </button>
                         </form>
                         <sub style="font-size:0.8rem;padding: 0.2rem;">
@@ -70,12 +73,13 @@ include '../SSS/connection.php';
                 }
             } else {
                 ?>
-
-                <span style="width: 100%;text-align: center;">
+            </div>
+            <center>
+                <span style="width: 100vw;text-align: center;margin: auto;">
                     <h2>You hav not added any products</h2><br>
                     <h3>You can add from <a href="./add_products.php" style="text-decoration: none;">HERE</a></h3>
                 </span>
-            </div>
+            </center>
         </div>
 
         <?Php

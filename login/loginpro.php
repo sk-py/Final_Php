@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +13,7 @@ session_start();
 </head>
 
 <body>
-    <div class="blur-overlay1">
+    <div class="blur_div">
         <div class="wrapper">
             <form method="Post" action="../SSS/auth.php">
                 <h1>

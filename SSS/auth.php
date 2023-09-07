@@ -95,6 +95,7 @@ if (isset($_POST['regbtn'])) {
     if ($response) {
         $_SESSION['uemail'] = $email;
         $_SESSION['name'] = $name;
+        $_SESSION['user_img'] = $user_pp;
         // $_SESSION['authorized'] = true;
         header('location:../HTML/header.php');
     } else {
@@ -115,6 +116,7 @@ if (isset($_POST['logbtn'])) {
     $res1 = mysqLi_query($conn, "select * from users where email='$email' && password='$password'");
     foreach ($res1 as $nres) {
         $_SESSION['name'] = $nres['name'];
+        $_SESSION['user_img'] = $nres['user_pp'];
 
     }
 
@@ -133,6 +135,64 @@ if (isset($_GET['logoutbtn'])) {
     header('location:../login/loginpro.php');
 }
 
+
+if (isset($_POST['email'])) {
+    $em = $_POST['email'];
+    $query = "SELECT * FROM `users` WHERE email='$em'";
+    $response = mysqLi_query($conn, $query);
+
+    if (mysqli_num_rows($response) > 0)
+        echo "A User With This Email Already Exists..! Please Try Using Different Email.";
+}
+
+
+if (isset($_POST['scbtn'])) {
+    $name = $_POST['name'];
+    $phone = $_POST['phone'];
+    $pswd = $_POST['pswd'];
+
+    if ($_FILES['image']['size'] > 0) {
+        $user_pp = random_int(0, 99999) . $_FILES['image']['name'];
+        $temploc = $_FILES['image']['tmp_name'];
+
+        if (file_exists(USER_IMG_PATH . $_SESSION['user_img'])) {
+            unlink(USER_IMG_PATH . $_SESSION['user_img']);
+        }
+
+        move_uploaded_file($temploc, USER_IMG_PATH . $user_pp);
+        $user_img = $user_pp;
+
+        $query = "UPDATE `users` SET `name`='$name',`password`='$pswd',`phone`='$phone',`user_pp`='$user_img' WHERE `email`='$_SESSION[uemail]'";
+        $pquery = "UPDATE `product_table` SET `posted_by_name`='$name' WHERE `posted_by`='$_SESSION[uemail]'";
+    } else {
+        $pquery = "UPDATE `product_table` SET `posted_by_name`='$name' WHERE `posted_by`='$_SESSION[uemail]'";
+        $query = "UPDATE `users` SET `name`='$name',`password`='$pswd',`phone`='$phone' WHERE `email`='$_SESSION[uemail]'";
+    }
+
+    $response = mysqli_query($conn, $query);
+
+    if ($response) {
+        mysqli_query($conn, $pquery);
+        header("location:../HTML/user_profile/profile_page.php");
+    } else {
+        echo "<center><h3>An unknown error occurred while updating your data. Please try again.</h3></center>";
+    }
+}
+
+
+
+if (isset($_POST['dltBtn'])) {
+    $email = $_POST['email'];
+    $query = "DELETE FROM `users` WHERE `email`='$email'";
+    $response = mysqLi_query($conn, $query);
+
+    if ($response) {
+        $query = "DELETE FROM `product_table` WHERE `posted_by`='$email'";
+        $response = mysqLi_query($conn, $query);
+        session_destroy();
+        header('location:../login/loginpro.php');
+    }
+}
 
 
 ?>

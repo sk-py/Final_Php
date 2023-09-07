@@ -16,6 +16,9 @@ if (!isset($_SESSION['uemail'])) {
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 </head>
 
@@ -78,11 +81,25 @@ if (!isset($_SESSION['uemail'])) {
             <hr>
             <div class="form-group mt-3 w-75">
                 <label class="mr-2 fs-5 p-1">Upload image of product:</label>
-                <input type="file" name="prod_img">
+                <input type="file" name="prod_img" class="prod_img"><br>
+                <small class="error text-danger"></small>
             </div>
             <hr>
             <button type="submit" class="btn btn-primary" name="add_prods_btn">Submit</button>
         </form>
+        <script>
+            $('.prod_img').on('change', function () {
+                var maxFileSize = 2048000;
+                var fileSize = this.files[0].size;
+
+                if (fileSize > maxFileSize) {
+                    $('.error').html('File size is too large. Maximum size is 2 MB.<br> <a href="https://www.reduceimages.com/" target="_blank">Reduce image size from here</a>');
+                    this.value = '';
+                } else {
+                    $('.error').text('');
+                }
+            });
+        </script>
     </div>
 
 

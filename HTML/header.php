@@ -9,11 +9,11 @@ include '../SSS/connection.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Deal.io</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
     <!-- <link rel="stylesheet" href="../Styles/header.css"> -->
     <link rel="stylesheet" href="../Styles/pcard.css">
-    <link rel="website icon" href="../logo.jpeg" type="jpeg">
+    <link rel="website icon" href="./favicon.png" type="jpeg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,10 +38,17 @@ include '../SSS/connection.php';
         </form>
         <?Php
         if (isset($_SESSION['uemail'])) {
+            $email = $_SESSION['uemail'];
+            $res1 = mysqLi_query($conn, "select `user_pp`,`name` from users where `email`='$email'");
+            foreach ($res1 as $nres) {
+                $_SESSION['name'] = $nres['name'];
+                $_SESSION['user_img'] = $nres['user_pp'];
+            }
+            $user_pp = $_SESSION['user_img'];
             echo <<<Dropdown
                           <div class="custom-dropdown">
                             <a class="custom-dropdown-toggle" href="#">
-                               <h3 style="color: #ffffff;display:flex;align-items:center;"><img width="35px" style="border-radius:50%" src="https://img.freepik.com/premium-vector/businessman-avatar-illustration-cartoon-user-portrait-user-profile-icon_118339-4382.jpg" alt="profile-pic">&nbsp;&nbsp;<i class="fa-solid fa-caret-down" style="color: #ffffff;"></i></h3> 
+                               <h3 style="color: #ffffff;display:flex;align-items:center;"><img style="border-radius:5rem;object-fit:cover;width:35px;height:35px" src="../user_img/$user_pp" alt="profile-pic">&nbsp;&nbsp;<i class="fa-solid fa-caret-down" style="color: #ffffff;"></i></h3> 
                             </a>
                             <ul class="custom-dropdown-menu">
                             <li><a href="add_products.php">Add Product</a></li>
@@ -77,20 +84,31 @@ include '../SSS/connection.php';
 
         <?Php
         if (isset($_SESSION['uemail'])) {
-            echo <<<Dropdown
-                             <div class="custom-dropdown custom-dropdown_mobile ">
-                                    <a class="custom-dropdown-toggle" href="#">
-                                    <h3 style="color: #ffffff;display:flex;align-items:center;margin-bottom:0.5rem"><a target="blank" href="https://img.freepik.com/premium-vector/businessman-avatar-illustration-cartoon-user-portrait-user-profile-icon_118339-4382.jpg"><img width="35px" style="border-radius:50%" src="https://img.freepik.com/premium-vector/businessman-avatar-illustration-cartoon-user-portrait-user-profile-icon_118339-4382.jpg" alt="profile-pic"></a>&nbsp; Student &nbsp;<i class="fa-solid fa-caret-down" style="color: #ffffff;"></i></h3> 
-                                    </a>
-                                    <ul class="custom-dropdown-menu">
-                                    <li><a href="add_products.php">Add Product</a></li>
-                                     <li><a href="./user_profile/profile_page.php">Profile Settings</a></li>
-                                        <li><a href="./my_products.php">My Products</a></li>
-                                        <li><form action="../SSS/auth.php" ><button type="submit" style="background-color: #fff;border:none;font-size:1rem;cursor:pointer" name="logoutbtn">Logout</form></li>
-                                        
-                                        </ul>
-                                        </div>
-                    Dropdown;
+            ?>
+        <div class="custom-dropdown custom-dropdown_mobile">
+            <a class="custom-dropdown-toggle" href="#">
+                <h3 style="color: #ffffff;display:flex;align-items:center;margin-bottom:0.5rem"><a target="blank"
+                        href="<?Php echo "../user_img/" . $_SESSION['user_img'] ?>">
+                        <img width="35px" style="border-radius:50%;height:35px;object-fit: cover;"
+                            src="<?Php echo "../user_img/" . $_SESSION['user_img'] ?>" alt=""></a>&nbsp;
+                    <p>
+                        <?Php echo $_SESSION['name'] ?>
+                    </p> &nbsp;<i class="fa-solid fa-caret-down" style="color: #ffffff;"></i>
+                </h3>
+            </a>
+            <ul class="custom-dropdown-menu">
+                <li><a href="add_products.php">Add Product</a></li>
+                <li><a href="./user_profile/profile_page.php">Profile Settings</a></li>
+                <li><a href="./my_products.php">My Products</a></li>
+                <li>
+                    <form action="../SSS/auth.php"><button type="submit"
+                            style="background-color: #fff;border:none;font-size:1rem;cursor:pointer"
+                            name="logoutbtn">Logout</form>
+                </li>
+
+            </ul>
+        </div>
+        <?Php
 
         } else {
             echo <<<Buttons
@@ -109,19 +127,19 @@ include '../SSS/connection.php';
     <!-------------------------------------------------Carousel-------------------------------------------------------------------------------->
     <div class="slide-container">
         <div class="slide">
-            <img src="../1.png" alt="">
+            <img src="./web-images/buy & sell.jpg" alt="" id="simg1">
         </div>
 
         <div class=" slide">
-            <img src="" alt="">
+            <img src="./web-images/2.jpg" alt="" id="simg2">
         </div>
 
         <div class=" slide">
-            <img src="../images/buy & sell.png" alt="">
+            <img src="./web-images/parthpc1.jpeg" alt="" id="simg3">
         </div>
 
         <div class=" slide">
-            <img src="https://rukminim1.flixcart.com/fk-p-flap/1600/270/image/fb8e9c74644f4ce1.png?q=20" alt="">
+            <img src="./web-images/parthpc2.jpeg" alt="" id="simg4">
         </div>
 
         <span class=" arrow prev" onclick="controller(-1)">&#10094;</span>
@@ -130,6 +148,9 @@ include '../SSS/connection.php';
     <script src="../Scripts/index.js"></script>
     <!-----------------------------------------------------------------------Carousel End -------------------------------------------------------------------------------------->
 
+    <div class="banner-latest" style="margin-top: -5px;width: 100vw;">
+        <h2>Categories</h2>
+    </div>
 
 
     <section class="sec-1">
@@ -137,21 +158,29 @@ include '../SSS/connection.php';
             <div class="white">
                 <p>Mobile</p>
             </div>
-            <img src="../images/asset 3.png">
+            <!-- <img src="https://images.pexels.com/photos/40739/mobile-phone-smartphone-tablet-white-40739.jpeg?auto=compress&cs=tinysrgb&w=1600"
+                alt=""> -->
+            <img
+                src="https://rukminim2.flixcart.com/image/416/416/xif0q/mobile/0/8/4/-original-imagfhu75eupxyft.jpeg?q=70">
         </div>
 
         <div class="box">
             <div class="white">
                 <p>Fashion</p>
             </div>
-            <img src="../images/asset 4.png">
+            <!-- <img src="https://images.pexels.com/photos/40739/mobile-phone-smartphone-tablet-white-40739.jpeg?auto=compress&cs=tinysrgb&w=1600"
+                alt=""> -->
+            <img src="https://m.media-amazon.com/images/I/71b6grXX5sL._UY741_.jpg">
         </div>
 
         <div class="box">
             <div class="white">
-                <p>Electronics</p>
+                <p>Computers</p>
             </div>
-            <img src="../images/asset 7.png">
+            <!-- <img src="https://images.pexels.com/photos/40739/mobile-phone-smartphone-tablet-white-40739.jpeg?auto=compress&cs=tinysrgb&w=1600"
+                alt=""> -->
+            <img
+                src="https://rukminim2.flixcart.com/image/416/416/xif0q/allinone-desktop/s/m/1/1564-tegh-original-imagjwgnzbzebpep.jpeg?q=70">
         </div>
 
     </section>
@@ -159,23 +188,30 @@ include '../SSS/connection.php';
     <section class="sec-1">
         <div class="box">
             <div class="white">
-                <p>Two Whellers</p>
+                <p>Automotive</p>
             </div>
-            <img src="../images/asset 10.png">
+            <!-- <img src="https://images.pexels.com/photos/40739/mobile-phone-smartphone-tablet-white-40739.jpeg?auto=compress&cs=tinysrgb&w=1600"
+                alt=""> -->
+            <img src="https://m.media-amazon.com/images/I/51i7yuKwsWL._AC_UL400_.jpg">
         </div>
 
         <div class="box">
             <div class="white">
-                <p>Home and Furniture</p>
+                <p>Home Decor</p>
             </div>
-            <img src="../images/asset 6.jpeg">
+            <!-- <img src="https://images.pexels.com/photos/40739/mobile-phone-smartphone-tablet-white-40739.jpeg?auto=compress&cs=tinysrgb&w=1600"
+                alt=""> -->
+            <img src="https://m.media-amazon.com/images/I/61FN+rR5naL._AC_UL400_.jpg">
         </div>
 
         <div class="box">
             <div class="white">
-                <p>Toys</p>
+                <p>Others</p>
             </div>
-            <img src="../images/asset 9.png">
+            <!-- <img src="https://images.pexels.com/photos/40739/mobile-phone-smartphone-tablet-white-40739.jpeg?auto=compress&cs=tinysrgb&w=1600"
+                alt=""> -->
+            <img
+                src="https://images.pexels.com/photos/2657667/pexels-photo-2657667.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
         </div>
 
     </section>
